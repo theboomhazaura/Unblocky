@@ -57,6 +57,8 @@
 			"tests/ci/**/*.js"
 		],
 		"verbose": true
+		"engines": {
+  "node": "20.x"
 	},
 	"devDependencies": {
 		"@8hobbies/typedoc-plugin-404": "^3.2.1",
