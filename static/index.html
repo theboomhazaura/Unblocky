@@ -51,21 +51,53 @@
 <style>
     /* Sleek Footer Styling */
     .footer {
-        position: fixed;
-        bottom: 20px;
-        width: 100%;
-        text-align: center;
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 0.7em;
-        color: #444;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        pointer-events: none; /* Keeps it from interfering with clicks */
+<div class="footer">
+    <div class="status-container">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">System: Checking...</span>
+    </div>
+    <div class="credits">
+        Sigma Engine <span class="version-tag">v1.3.0</span> | Dev: [will brown]
+    </div>
+</div>
     }
     .version-tag {
         color: #00ff88;
         font-weight: bold;
     }
+			.status-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.status-dot {
+    height: 8px;
+    width: 8px;
+    background-color: #555; /* Default gray while checking */
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+/* The Sigma Glow */
+.status-online {
+    background-color: #00ff88;
+    box-shadow: 0 0 0 rgba(0, 255, 136, 0.4);
+    animation: pulse 2s infinite;
+}
+
+.status-offline {
+    background-color: #ff4444;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+}
 </style>
 
 <div class="footer">
@@ -110,6 +142,31 @@ function launchGame(url) {
                 document.title = "Google Docs";
             }
         });
+			async function checkStatus() {
+    const dot = document.getElementById('status-dot');
+    const text = document.getElementById('status-text');
+
+    try {
+        // We "ping" the server to see if the engine is alive
+        const response = await fetch(window.location.origin + '/service/');
+        if (response.ok || response.status === 404) { 
+            // 404 is actually a good sign here, it means the service folder exists
+            dot.className = 'status-dot status-online';
+            text.innerText = 'System: Operational';
+            text.style.color = '#00ff88';
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        dot.className = 'status-dot status-offline';
+        text.innerText = 'System: Offline (Check VPN)';
+        text.style.color = '#ff4444';
+    }
+}
+
+// Check every 30 seconds to stay updated
+checkStatus();
+setInterval(checkStatus, 15000);
     </script>
 </body>
 </html>
