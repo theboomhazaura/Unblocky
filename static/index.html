@@ -1,67 +1,92 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Scramjet</title>
-		<link rel="icon" href="favicon.webp" />
-		<link
-			href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;family=Inter+Tight:ital,wght@0,100..900;1,100..900&amp;family=Inter:wght@100..900&amp;display=swap&amp;"
-			rel="stylesheet"
-		/>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap"
-			rel="stylesheet"
-		/>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-			rel="stylesheet"
-		/>
-		<style>
-			body,
-			html,
-			#app {
-				font-family:
-					"Inter",
-					system-ui,
-					-apple-system,
-					BlinkMacSystemFont,
-					sans-serif;
-				width: 100vw;
-				height: 100vh;
-				margin: 0;
-				padding: 0;
-				background-color: #050505;
-				overflow: hidden;
-			}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Docs</title> <link rel="icon" type="image/x-icon" href="https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 { color: #00ff88; text-shadow: 0 0 10px #00ff88; }
+        .search-container { width: 80%; max-width: 600px; }
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            font-size: 1.1em;
+            background: #1e1e1e;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .games-grid {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .game-card {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid #333;
+        }
+        .game-card:hover { transform: scale(1.05); border-color: #00ff88; }
+        .panic-info { position: fixed; bottom: 10px; font-size: 0.8em; color: #555; }
+    </style>
+</head>
+<body>
 
-			@keyframes fade {
-				from {
-					opacity: 0;
-				}
-				to {
-					opacity: 1;
-				}
-			}
-		</style>
-		<script
-			defer
-			data-domain="scramjet.mercurywork.shop"
-			src="https://analytics.proudparrot2.com/js/script.js"
-		></script>
-		<script src="https://cdn.jsdelivr.net/npm/dreamland@0.0.25"></script>
-		<script src="/baremux/index.js"></script>
-		<script src="/scram/scramjet.all.js"></script>
-		<script src="config.js"></script>
-		<script src="store.js"></script>
-	</head>
+    <h1>Sigma Unblocker v1.0</h1>
+    
+    <div class="search-container">
+        <input type="text" id="url-input" placeholder="Enter URL or Search 'brrr brrr patipim'...">
+    </div>
 
-	<body>
-		<div id="app"></div>
-		<script src="ui.js"></script>
-	</body>
+    <div class="games-grid">
+        <div class="game-card" onclick="launchGame('https://geometrydash.io')">Geometry Dash</div>
+        <div class="game-card" onclick="launchGame('https://subwaysurfers.com')">Subway Surfers</div>
+        <div class="game-card" onclick="launchGame('https://minecraft.net')">Minecraft</div>
+    </div>
+
+    <div class="panic-info">Press <b>"~" (Tilde)</b> to Panic Redirect to Canvas.</div>
+
+    <script>
+        // 1. PANIC KEY (The "Tralalao Tralala" Defense)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '~') {
+                window.location.href = 'https://canvas.instructure.com'; // Change to your school portal
+            }
+        });
+
+        // 2. LAUNCHER LOGIC
+function launchGame(url) {
+    // Scramjet usually uses the /search/ or /main/ prefix
+    // This script encodes the URL for Scramjet's engine
+    window.location.href = window.location.origin + '/service/' + btoa(url);
+}
+        }
+
+        // 3. TAB CLOAKING
+        // Keeps the tab looking like Google Docs even if you switch back and forth
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = "Google Docs";
+            }
+        });
+    </script>
+</body>
 </html>
