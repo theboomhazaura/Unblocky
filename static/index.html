@@ -155,7 +155,42 @@
     <div class="panic-info">Press <b>"~" (Tilde)</b> to Panic Redirect to Canvas.</div>
 
     <script>
-        // 1. PANIC KEY (The "Tralalao Tralala" Defense)
+      function selfDestruct() {
+    // 1. Wipe all local storage (history, saved sites, settings)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // 2. Attempt to unregister Service Workers (the proxy engine)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            for (let registration of registrations) {
+                registration.unregister();
+            }
+        });
+    }
+
+    // 3. Redirect to a "Safe" site using .replace() 
+    // .replace() is key because it removes the unblocker from the browser's "Back" history
+    window.location.replace("https://www.google.com/search?q=calculus+notes");
+}
+
+// Trigger the Self-Destruct with the "Delete" key
+window.addEventListener('keydown', (e) => {
+    if (e.key === "Delete") {
+        selfDestruct();
+    }
+});
+function applyCloak() {
+    document.title = "Dashboard | Canvas";
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = 'https://canvas.instructure.com/favicon.ico';
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+
+applyCloak();
+			// 1. PANIC KEY (The "Tralalao Tralala" Defense)
         document.addEventListener('keydown', function(e) {
             if (e.key === '~') {
                 window.location.href = 'https://canvas.instructure.com'; // Change to your school portal
