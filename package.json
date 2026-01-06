@@ -1,39 +1,22 @@
 {
-	"name": "@mercuryworkshop/scramjet",
-	"version": "2.0.0-alpha",
-	"description": "An experimental web proxy that aims to be the successor to Ultraviolet",
-	"type": "module",
-	"main": "server.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/MercuryWorkshop/scramjet"
-	},
-	"scripts": {
-		"build": "rspack build --mode production",
-		"start": "node server.js",
-		"dev": "node server.js",
-		"format": "prettier --write .",
-		"lint": "eslint ./src/"
-	},
-	"engines": {
-		"node": "20.x"
-	},
-	"dependencies": {
-		"@mercuryworkshop/bare-mux": "^2.1.7",
-		"dom-serializer": "^2.0.0",
-		"domhandler": "^5.0.3",
-		"domutils": "^3.2.2",
-		"fastify": "^5.6.0",
-		"@fastify/static": "^8.2.0",
-		"htmlparser2": "10.0.0",
-		"idb": "^8.0.3",
-		"parse-domain": "^8.2.2",
-		"set-cookie-parser": "^2.7.1"
-	},
-	"devDependencies": {
-		"@rspack/cli": "^1.5.3",
-		"@rspack/core": "^1.5.3",
-		"typescript": "^5.7.2",
-		"prettier": "^3.3.2"
-	}
+  "name": "unblocky",
+  "version": "1.0.0",
+  "description": "Scramjet Unblocker Deployment",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "@nebula-services/bare-server-node": "^2.0.2",
+    "fastify": "^4.26.2",
+    "@fastify/static": "^7.0.1",
+    "commander": "^12.0.0",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }
