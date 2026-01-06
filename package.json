@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@nebula-services/bare-server-node": "^2.0.2",
+    "@mercuryworkshop/wisp-js": "^1.1.0",
+    "@mercuryworkshop/epoxide": "^1.2.0",
     "@fastify/static": "^7.0.1",
     "fastify": "^4.26.2",
     "commander": "^12.0.0",
