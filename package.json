@@ -7,14 +7,14 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@nebula-services/bare-server-node": "^2.0.2",
+    "@nebula-services/bare-server-node": "*",
     "@mercuryworkshop/wisp-js": "*",
     "@mercuryworkshop/bare-mux": "*",
     "@mercuryworkshop/epoxy-transport": "*",
     "@mercuryworkshop/libcurl-transport": "*",
     "@mercuryworkshop/bare-as-module3": "*",
-    "@titaniumnetwork-dev/ultraviolet": "^3.2.5",
-    "ultraviolet-static": "^3.2.5",
+    "@titaniumnetwork-dev/ultraviolet": "*",
+    "ultraviolet-static": "*",
     "fastify": "^4.26.2",
     "@fastify/static": "^7.0.1"
   },
