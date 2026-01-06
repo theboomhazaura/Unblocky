@@ -1,67 +1,19 @@
-// Dev server imports
-import { createBareServer } from "@nebula-services/bare-server-node";
-import { createServer } from "http";
-import Fastify from "fastify";
-import fastifyStatic from "@fastify/static";
-import { join } from "node:path";
-import rspackConfig from "./rspack.config.js";
-import { rspack } from "@rspack/core";
-import { spawn } from "node:child_process";
-import { fileURLToPath } from "node:url";
-import { server as wisp } from "@mercuryworkshop/wisp-js/server";
+// ... keep your other imports the same ...
 
-//transports
+// 1. Updated Transports Section
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
-import "@mercuryworkshop/epoxy-transport";
+// These no longer export a 'path', so we define them manually below
+import "@mercuryworkshop/epoxy-transport"; 
 import "@mercuryworkshop/libcurl-transport";
 import { bareModulePath } from "@mercuryworkshop/bare-as-module3";
-import { chmodSync, mkdirSync, writeFileSync } from "fs";
 
-const bare = createBareServer("/bare/", {
-	logErrors: true,
-	blockLocal: false,
-});
+// 2. Define the missing paths manually for the Docker environment
+const epoxyPath = join(fileURLToPath(new URL(".", import.meta.url)), "node_modules/@mercuryworkshop/epoxy-transport/dist");
+const libcurlPath = join(fileURLToPath(new URL(".", import.meta.url)), "node_modules/@mercuryworkshop/libcurl-transport/dist");
 
-wisp.options.allow_loopback_ips = true;
-wisp.options.allow_private_ips = true;
+// ... keep the Fastify/Bare server logic the same ...
 
-const fastify = Fastify({
-	serverFactory: (handler) => {
-		return createServer()
-			.on("request", (req, res) => {
-				res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-				res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-
-				if (bare.shouldRoute(req)) {
-					bare.routeRequest(req, res);
-				} else {
-					handler(req, res);
-				}
-			})
-			.on("upgrade", (req, socket, head) => {
-				if (bare.shouldRoute(req)) {
-					bare.routeUpgrade(req, socket, head);
-				} else {
-					wisp.routeRequest(req, socket, head);
-				}
-			});
-	},
-});
-
-fastify.register(fastifyStatic, {
-	root: join(fileURLToPath(new URL(".", import.meta.url)), "./static"),
-	decorateReply: false,
-});
-fastify.register(fastifyStatic, {
-	root: join(fileURLToPath(new URL(".", import.meta.url)), "./dist"),
-	prefix: "/scram/",
-	decorateReply: false,
-});
-fastify.register(fastifyStatic, {
-	root: join(fileURLToPath(new URL(".", import.meta.url)), "./assets"),
-	prefix: "/assets/",
-	decorateReply: false,
-});
+// 3. Updated Static Registrations (ensure these match your existing block)
 fastify.register(fastifyStatic, {
 	root: baremuxPath,
 	prefix: "/baremux/",
@@ -77,43 +29,3 @@ fastify.register(fastifyStatic, {
 	prefix: "/libcurl/",
 	decorateReply: false,
 });
-fastify.register(fastifyStatic, {
-	root: bareModulePath,
-	prefix: "/baremod/",
-	decorateReply: false,
-});
-
-const PORT = process.env.PORT ? parseInt(process.env.PORT) || 1337 : 1337;
-
-fastify.listen({
-	port: PORT,
-	host: "0.0.0.0",
-});
-
-fastify.setNotFoundHandler((request, reply) => {
-	console.error("PAGE PUNCHED THROUGH SW - " + request.url);
-	reply.code(593).send("punch through");
-});
-console.log(`Listening on http://localhost:${PORT}/`);
-if (!process.env.CI) {
-	try {
-		writeFileSync(
-			".git/hooks/pre-commit",
-			"pnpm format\ngit update-index --again"
-		);
-		chmodSync(".git/hooks/pre-commit", 0o755);
-	} catch {}
-
-	const compiler = rspack(rspackConfig);
-	compiler.watch({}, (err, stats) => {
-		console.log(
-			stats
-				? stats.toString({
-						preset: "minimal",
-						colors: true,
-						version: false,
-					})
-				: ""
-		);
-	});
-}
