@@ -11,6 +11,7 @@
     "@mercuryworkshop/wisp-js": "*",
     "@mercuryworkshop/bare-mux": "*",
     "@mercuryworkshop/epoxy-transport": "*",
+    "@mercuryworkshop/libcurl-transport": "*",
     "@titaniumnetwork-dev/ultraviolet": "*",
     "fastify": "^4.26.2",
     "@fastify/static": "^7.0.1",
