@@ -1,20 +1,20 @@
 {
   "name": "unblocky",
   "version": "1.0.0",
-  "description": "Scramjet Unblocker Deployment",
-  "main": "server.js",
   "type": "module",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "echo 'No build step required'"
+    "start": "node server.js"
   },
   "dependencies": {
     "@nebula-services/bare-server-node": "^2.0.2",
-    "fastify": "^4.26.2",
     "@fastify/static": "^7.0.1",
+    "fastify": "^4.26.2",
     "commander": "^12.0.0",
     "chalk": "^5.3.0",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "@rspack/core": "^0.5.0",
+    "webpack-merge": "^5.10.0"
   },
   "engines": {
     "node": ">=20.0.0"
