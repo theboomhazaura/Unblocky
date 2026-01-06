@@ -12,8 +12,8 @@ import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 
 //transports
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
-import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
-import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
+import "@mercuryworkshop/epoxy-transport";
+import "@mercuryworkshop/libcurl-transport";
 import { bareModulePath } from "@mercuryworkshop/bare-as-module3";
 import { chmodSync, mkdirSync, writeFileSync } from "fs";
 
