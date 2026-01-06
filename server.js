@@ -6,15 +6,13 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 
-// Import modules without looking for missing 'Path' exports
-import "@mercuryworkshop/epoxy-transport";
-import "@mercuryworkshop/libcurl-transport";
+// ONLY import the path helpers that are safe for Node.js
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import { bareModulePath } from "@mercuryworkshop/bare-as-module3";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
-// MANUALLY define the paths that the new versions removed
+// Manually define paths (DO NOT import epoxy or libcurl here)
 const epoxyPath = join(__dirname, "node_modules/@mercuryworkshop/epoxy-transport/dist");
 const libcurlPath = join(__dirname, "node_modules/@mercuryworkshop/libcurl-transport/dist");
 
@@ -35,7 +33,7 @@ const fastify = Fastify({
     },
 });
 
-// Static Registrations
+// Serve the files to the browser
 fastify.register(fastifyStatic, { root: join(__dirname, "static"), decorateReply: false });
 fastify.register(fastifyStatic, { root: baremuxPath, prefix: "/baremux/", decorateReply: false });
 fastify.register(fastifyStatic, { root: epoxyPath, prefix: "/epoxy/", decorateReply: false });
@@ -44,6 +42,6 @@ fastify.register(fastifyStatic, { root: bareModulePath, prefix: "/baremod/", dec
 
 const PORT = process.env.PORT || 8080;
 fastify.listen({ port: PORT, host: "0.0.0.0" }, (err) => {
-    if (err) { process.exit(1); }
-    console.log(`Server live on port ${PORT}`);
+    if (err) { console.error(err); process.exit(1); }
+    console.log(`Server is finally healthy on port ${PORT}`);
 });
