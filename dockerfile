@@ -8,7 +8,12 @@ WORKDIR /app
 COPY package.json ./
 
 # Install dependencies normally (bypasses the 'npm ci' error)
-RUN npm install
+# ... (previous lines)
+
+# Install dependencies and ignore peer conflicts
+RUN npm install --legacy-peer-deps
+
+# ... (rest of your files)
 
 # Copy the rest of your files
 COPY . .
