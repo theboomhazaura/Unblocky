@@ -7,12 +7,12 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@nebula-services/bare-server-node": "^2.0.2",
-    "@mercuryworkshop/wisp-js": "^1.1.0",
-    "@mercuryworkshop/bare-mux": "^1.1.0",
-    "@mercuryworkshop/epoxy-transport": "0.3.0",
-    "@mercuryworkshop/libcurl-transport": "0.2.0",
-    "@mercuryworkshop/bare-as-module3": "^3.0.0",
+    "@nebula-services/bare-server-node": "*",
+    "@mercuryworkshop/wisp-js": "*",
+    "@mercuryworkshop/bare-mux": "*",
+    "@mercuryworkshop/epoxy-transport": "*",
+    "@mercuryworkshop/libcurl-transport": "*",
+    "@mercuryworkshop/bare-as-module3": "*",
     "@titaniumnetwork-dev/ultraviolet": "^3.2.3",
     "ultraviolet-static": "*",
     "fastify": "^4.26.2",
