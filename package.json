@@ -18,7 +18,6 @@
 	"engines": {
 		"node": "20.x"
 	},
-	"packageManager": "pnpm@9.0.0",
 	"dependencies": {
 		"@mercuryworkshop/bare-mux": "^2.1.7",
 		"dom-serializer": "^2.0.0",
