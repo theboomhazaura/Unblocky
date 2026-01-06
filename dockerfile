@@ -1,29 +1,21 @@
-# Use the stable Node 20 slim image
 FROM node:20-slim
 
-# Install git and essential build tools for native dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    python3 \
-    make \
-    g++ \
-    && rm -rf /var/lib/apt/lists/*
+# Install git and build tools
+RUN apt-get update && apt-get install -y git python3 make g++ && rm -rf /var/lib/apt/lists/*
 
-# Create app directory
 WORKDIR /app
 
-# Copy package files first to leverage Docker cache
 COPY package.json ./
 
-# Install dependencies using legacy-peer-deps to handle Rspack conflicts
-# This allows the git+https downloads to work
+# Install dependencies
 RUN npm install --legacy-peer-deps
 
-# Copy the rest of your application code
+# NEW STEP: Manually build the transport modules if they didn't come with a 'dist' folder
+RUN cd node_modules/@mercuryworkshop/epoxy-transport && npm install && npm run build || true
+RUN cd node_modules/@mercuryworkshop/libcurl-transport && npm install && npm run build || true
+
 COPY . .
 
-# Expose the port (Koyeb usually defaults to 8080 or the PORT env var)
 EXPOSE 8080
 
-# Start the application
 CMD ["node", "server.js"]
