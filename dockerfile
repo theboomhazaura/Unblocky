@@ -1,20 +1,17 @@
 FROM node:20-slim
 
-# Install basic build tools
+# Install minimal build tools for native modules
 RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy package files
 COPY package.json ./
-
-# Install with legacy-peer-deps to ignore version conflicts
+# This is the critical line that will now succeed
 RUN npm install --legacy-peer-deps
 
-# Copy the rest of the code
 COPY . .
 
-# Set Port and Start
 EXPOSE 8080
 ENV PORT=8080
+
 CMD ["node", "server.js"]
