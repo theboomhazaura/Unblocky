@@ -7,8 +7,8 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@nebula-services/bare-server-node": "^2.0.2",
-    "@mercuryworkshop/wisp-js": "^1.1.0",
+    "@nebula-services/bare-server-node": "*",
+    "@mercuryworkshop/wisp-js": "*",
     "fastify": "^4.26.2",
     "@fastify/static": "^7.0.1",
     "commander": "^12.0.0",
