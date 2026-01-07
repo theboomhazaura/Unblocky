@@ -256,6 +256,15 @@ window.addEventListener('keydown', (e) => {
     if (inputBuffer === secretCode) {
         document.getElementById('cloak-screen').style.display = 'none';
         console.log("Access Granted");
+			// Add this to ensure iPad "Go" button works
+const input = document.querySelector('input'); 
+input.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        const url = input.value;
+        // This is the Scramjet-specific redirect logic
+        window.location.href = __scramjet$config.prefix + __scramjet$config.encodeUrl(url);
+    }
+});
     }
 });
     </script>
